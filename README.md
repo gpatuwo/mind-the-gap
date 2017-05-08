@@ -1,7 +1,8 @@
 ## Common Accessibility Issues
 
 ### HTML
-- semantic structure
+- semantic HTML language
+- auto engage accessibility mode
 - native keyboard AX **
   - features can only be selected via keyboard
   - ex links, buttons, form inputs
