@@ -2,16 +2,18 @@ require 'rubygems'
 require 'nokogiri'
 require 'open-uri'
 
-class UpdatedImage
+class ImageUpdater
   attr_reader :updated_image, :alt_text
   def initialize(image)
     @image = image
   end
 
   def self.update_image(image)
-    img_src = @image.attributes['src'].value
+    img_src = image.attributes['src'].value
     reverse_img_search_url = 'https://www.google.com/searchbyimage?&image_url=${img_src}'
-    @results_page = Nokogiri::HTML(open(reverse_img_search_url))
+    results_page = Nokogiri::HTML(open(reverse_img_search_url))
+    alt_text = results_page.css('div._hUb')
+    puts alt_text
   end
 
   def get_alt_text(page)
