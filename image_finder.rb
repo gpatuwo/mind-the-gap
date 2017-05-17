@@ -1,8 +1,7 @@
 require 'rubygems'
 require 'nokogiri'
 require 'open-uri'
-require_relative 'image_recognition'
-require_relative 'updated_image'
+require_relative 'image_recognition.rb'
 
 class ImageFinder
   attr_reader :images

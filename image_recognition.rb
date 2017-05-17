@@ -5,9 +5,9 @@ require "google/apis/storage_v1"
 
 class ImageRecognition
 
-  def get_scopes_and_authorization
+  def self.get_scopes_and_authorization
 
-    scopes =  ['https://www.googleapis.com/auth/cloud-platform', 'https://www.googleapis.com/auth/devstorage.read_only']
+    scopes = ['https://www.googleapis.com/auth/cloud-platform', 'https://www.googleapis.com/auth/devstorage.read_only']
     authorization = Google::Auth.get_application_default(scopes)
 
     storage = Google::Apis::StorageV1::StorageService.new
@@ -47,10 +47,11 @@ class ImageRecognition
 
   def self.detect_labels(img_src)
 
-    #get_scopes_and_authorization
+    ImageRecognition.get_scopes_and_authorization
 
     # Your Google Cloud Platform project ID
     project_id = 'accessibility-167719'
+    #project_id = '2e03176f6932eb9ce9318d5449e167d772f94a3a'
     # Instantiates a client
     vision = Google::Cloud::Vision.new project: project_id
 
@@ -74,7 +75,6 @@ if __FILE__ == $PROGRAM_NAME
   project_id = ENV['accessibility-167719']
 
   if image_path
-    ImageRecognition.detect_text image_path: image_path, project_id: project_id
     ImageRecognition.detect_labels image_path: image_path, project_id: project_id
   else
     puts <<-usage
