@@ -1,25 +1,31 @@
 require 'rubygems'
 require 'nokogiri'
 require 'open-uri'
+require_relative 'image_recognition'
 require_relative 'updated_image'
 
 class ImageFinder
   attr_reader :images
 
-  def initialize url
-    @images = find_images url
+  def initialize(url)
+    @images = find_images(url)
   end
 
-  def find_images url
-    webpage = Nokogiri::HTML open url
+  def find_images(url)
+    webpage = Nokogiri::HTML(open(url))
     webpage.css 'img'
   end
 
-  def update_images
-    @images.each do |image|
-      ImageUpdater.new image
-      puts "hello"
+  def generate_alt_text
+    @images.each_with_index do |image, i|
+      img_src = get_img_src(image)
+      puts i
+      ImageRecognition.detect_labels(img_src)
     end
+  end
+
+  def get_img_src(image)
+    image.attributes['src'].value
   end
 
   def each &prc
