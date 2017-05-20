@@ -15,21 +15,26 @@ class ImageRecognition
 
   end
 
-  def self.detect_text(image_path)
+  def self.detect_text(img_src)
 
     # [START vision_text_detection]
     # project_id = "Your Google Cloud project ID"
     # image_path = "Path to local image file, eg. './image.png'"
 
-    #get_scopes_and_authorization
+    ImageRecognition.get_scopes_and_authorization
+
+    # Your Google Cloud Platform project ID
     project_id = 'accessibility-167719'
+    #project_id = '2e03176f6932eb9ce9318d5449e167d772f94a3a'
+    # Instantiates a client
     vision = Google::Cloud::Vision.new project: project_id
-    puts vision
-    puts "\n"
+
+    # The name of the image file to annotate
+    file_name = img_src
 
     #performs text detection, I think??
     #need to find character limit
-    text = vision.image(image_path).text
+    text = vision.image(file_name).text
 
     puts text
   end

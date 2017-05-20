@@ -7,11 +7,12 @@ class ImageFinder
   attr_reader :images
 
   def initialize(url)
-    @images = find_images(url)
+    @images = find_images url
+    generate_alt_text
   end
 
   def find_images(url)
-    webpage = Nokogiri::HTML(open(url))
+    webpage = Nokogiri::HTML open url
     webpage.css 'img'
   end
 
@@ -21,6 +22,11 @@ class ImageFinder
       puts i
       ImageRecognition.detect_labels(img_src)
     end
+  end
+
+  def self.generate_alt_text(image)
+    img_src = self.get_img_src(image)
+    ImageRecognition.detect_labels(img_src)
   end
 
   def get_img_src(image)
